@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/wwsis.iml" filepath="$PROJECT_DIR$/wwsis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wwsis.studies.artificialIntelligence.iml" filepath="$PROJECT_DIR$/wwsis.studies.artificialIntelligence.iml" />
     </modules>
   </component>
 </project>

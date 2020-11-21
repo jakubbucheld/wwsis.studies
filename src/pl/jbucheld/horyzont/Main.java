@@ -15,7 +15,6 @@ public class Main
 
     public static void main(String[] args)
     {
-//        antColonyOptimization.getStartupInfo();
         antColonyOptimization.solve();
         antColonyOptimization.getNaiveResult();
 

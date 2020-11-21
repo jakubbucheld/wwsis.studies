@@ -11,18 +11,18 @@ public class AntColonyOptimization
     static DecimalFormat decimalFormat = new DecimalFormat("##.##");
 
     private double alpha = 1;
-    private double beta = 5;
+    private double beta = 3;
     private int numberOfCities = 5;
-    private int numberOfAnts = 10;
+    private int numberOfAnts = 5;
     private int currentIndex;
-    private double Q = 500;
+    private double Q = 10;
     private double evaporation = 0.5;
     private int maxIterations = 100;
     List<Coordinates> bestTour;
 
-    private List<Ant> listOfAnts = new ArrayList<>();
-//    private List<Coordinates> cities = logics.generateCities(numberOfCities);
-    private List<Coordinates> cities = logics.inputCities(numberOfCities);
+    public List<Ant> listOfAnts = new ArrayList<>();
+    private List<Coordinates> cities = logics.generateCities(numberOfCities);
+//    private List<Coordinates> cities = logics.inputCities(numberOfCities);
     private Double[][] routes = logics.calculateDistances(cities);
     private Double[][] pheromones = logics.generatePheromoneArray(cities);
     private List<Ant> antsList = logics.createAnts(numberOfAnts);
@@ -100,15 +100,24 @@ public class AntColonyOptimization
         for (Coordinates c:cities)
         {
             if(ant.ifVisited(c)) probabilitiesOfPicking.put(c, 0.0);
-
-            else if (!ant.ifVisited(c))
+            else
             {
-                double probability = Math.pow(pheromones[cities.indexOf(ant.currentPosition())][cities.indexOf(c)], alpha)
+                Double probability = Math.pow(pheromones[cities.indexOf(ant.currentPosition())][cities.indexOf(c)], alpha)
                                     + Math.pow(MF.reciprocal(MF.calculateEuclidianDistance(c, ant.currentPosition())), beta);
+
                 probabilitiesOfPicking.put(c, probability);
             }
         }
-        return probabilitiesOfPicking.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue)).get().getKey();
+        Map.Entry<Coordinates, Double> maxEntry = null;
+        for (Map.Entry<Coordinates, Double> entry : probabilitiesOfPicking.entrySet())
+        {
+            if (maxEntry == null || entry.getValue() > maxEntry.getValue())
+            {
+                maxEntry = entry;
+            }
+        }
+        return maxEntry.getKey();
+//        return probabilitiesOfPicking.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue)).get().getKey();
     }
 
     public void moveAnts()
@@ -119,8 +128,9 @@ public class AntColonyOptimization
                     for (Ant ant:antsList)
                     {
                         Coordinates nextCity = selectNextCity(ant);
-                        ant.visitCity(nextCity);
                         updatePheromoneOnTrail(ant, nextCity);
+                        ant.visitCity(nextCity);
+
                     }
                     currentIndex++;
                 });
