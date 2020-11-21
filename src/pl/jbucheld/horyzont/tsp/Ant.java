@@ -21,27 +21,21 @@ public class Ant
 
     public void visitCity(Coordinates city)
     {
-//        trail.add(city);
         visited.add(city);
+    }
+
+    public boolean ifVisited(Coordinates city)
+    {
+        return visited.contains(city);
+    }
+
+    public Coordinates currentPosition()
+    {
+        return visited.get(visited.size()-1);
     }
 
     public void clearVisitedList()
     {
         this.visited = new ArrayList<>();
     }
-
-
-//    protected double trailLength(double graph[][])
-//    {
-//        double length = graph[trail[trailSize - 1]][trail[0]];
-//        for (int i = 0; i < trailSize - 1; i++)
-//            length += graph[trail[i]][trail[i + 1]];
-//        return length;
-//    }
-//
-//    protected void clear()
-//    {
-//        for (int i = 0; i < trailSize; i++)
-//            visited[i] = false;
-//    }
 }

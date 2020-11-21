@@ -13,4 +13,10 @@ public class MathematicalFunctions
 //        System.out.println("Dystans pomiędzy miastami wynosi :: " + distance);
         return distance;
     }
+
+    public Double reciprocal(Double number)
+    {
+        return 1/number;
+    }
+
 }

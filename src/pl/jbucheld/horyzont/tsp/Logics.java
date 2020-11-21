@@ -8,6 +8,33 @@ public class Logics
     final MathematicalFunctions MF = new MathematicalFunctions();
     DecimalFormat decimalFormat = new DecimalFormat("##.##");
 
+    public List<Coordinates> inputCities(Integer numberOfCities)
+    {
+        List<Coordinates> inputCities = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = 0; i < numberOfCities; i++)
+        {
+            System.out.println("Wprowadź współrzędną X: ");
+            if(!scanner.hasNextInt())
+            {
+                System.out.println("Podaj poparwną wartość INT");
+                scanner.next();
+            }
+            int tHorizontal = scanner.nextInt();
+
+            System.out.println("Wprowadź współrzędną Y: ");
+            if(!scanner.hasNextInt())
+            {
+                System.out.println("Podaj poparwną wartość INT");
+                scanner.next();
+            }
+            int tVertical = scanner.nextInt();
+            inputCities.add(new Coordinates(tHorizontal, tVertical));
+        }
+        return inputCities;
+    }
+
     public List<Coordinates> generateCities(Integer numberOfCities)
     {
         List<Coordinates> generatedCities = new ArrayList<>();
@@ -19,13 +46,8 @@ public class Logics
             int tVertical = coordinatesGenerator.nextInt(10+10)-10;
 
 //            System.out.println("   1.tymczasowe : " + tHorizontal + " " + tVertical);
-            if(ifCityExists(tHorizontal, tVertical, List.copyOf(generatedCities)))
-            { i=i-1;}
-            else
-            {
-//                System.out.println("### dodaję miasto : " + tHorizontal + " " + tVertical);
-                generatedCities.add(new Coordinates(tHorizontal, tVertical));
-            }
+            if(ifCityExists(tHorizontal, tVertical, List.copyOf(generatedCities))) i=i-1;
+            else generatedCities.add(new Coordinates(tHorizontal, tVertical));
         }
         return generatedCities;
     }
@@ -35,11 +57,8 @@ public class Logics
                          List<Coordinates> cities)
     {
         boolean check=false;
-        if(cities.isEmpty())
-        {
-//            System.out.println("    pusta kolekcja");
-            return false;
-        }
+        if(cities.isEmpty()) return false;
+
         Coordinates verify = new Coordinates(horizontal, vertical);
 //        System.out.println("   2. Sprawdzam czy miasto " + verify.toString() + " istnieje");
         for (Coordinates c:cities)
@@ -83,7 +102,16 @@ public class Logics
         return routes;
     }
 
-    public void printDistancesArray(Double[][] routes)
+    public Double[][] generatePheromoneArray(List<Coordinates> cities)
+    {
+        Double[][] pheromoneArray = new Double[cities.size()][cities.size()];
+        for (Double[] doubles : pheromoneArray) {
+            Arrays.fill(doubles, 0.0);
+        }
+        return pheromoneArray;
+    }
+
+    public void printArray(Double[][] routes)
     {
         for (int i = 0; i < routes.length; i++)
         {
@@ -113,6 +141,17 @@ public class Logics
         }
     }
 
+    public void nonRandomSetupAnts(List<Ant> ants,
+                                   List<Coordinates> cities)
+    {
+        int additionalIterator=0;
+        for (Ant ant : ants)
+        {
+            if(additionalIterator>cities.size()-1) additionalIterator=0;
+            ant.visitCity(cities.get(additionalIterator));
+            additionalIterator++;
+        }
+    }
     public Double calculateTrailLength(List<Coordinates> antRoute,
                                        Double[][] distancesArray)
     {
