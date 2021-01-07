@@ -1,4 +1,4 @@
-package pl.jbucheld.horyzont;
+package pl.jbucheld.horyzont.tsp;
 
 import pl.jbucheld.horyzont.tsp.*;
 

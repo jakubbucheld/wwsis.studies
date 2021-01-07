@@ -13,9 +13,9 @@ public class AntColonyOptimization
     private double alpha = 1;
     private double beta = 3;
     private int numberOfCities = 5;
-    private int numberOfAnts = 5;
+    private int numberOfAnts = 50;
     private int currentIndex;
-    private double Q = 10;
+    private double Q = 100;
     private double evaporation = 0.5;
     private int maxIterations = 100;
     List<Coordinates> bestTour;
@@ -81,8 +81,8 @@ public class AntColonyOptimization
 
     public void setupAnts()
     {
-        logics.setupAnts(antsList, cities);
-//        logics.nonRandomSetupAnts(antsList, cities);
+//        logics.setupAnts(antsList, cities);
+        logics.nonRandomSetupAnts(antsList, cities);
         for (Ant a:antsList) System.out.println("Mrówka " +
                 antsList.indexOf(a) +
                 " zaczyna w mieście " +
@@ -117,7 +117,6 @@ public class AntColonyOptimization
             }
         }
         return maxEntry.getKey();
-//        return probabilitiesOfPicking.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue)).get().getKey();
     }
 
     public void moveAnts()
