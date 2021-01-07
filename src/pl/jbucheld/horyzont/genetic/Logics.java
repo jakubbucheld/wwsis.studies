@@ -73,7 +73,7 @@ public class Logics
         else return temporary;
     }
 
-    public Map<Integer, Integer> calculateFunctionValuesBasedOnPopulationMap(Map<Integer, Integer> startingPopulation,
+    public Map<Integer, Integer> calculateFunctionValuesMapBasedOnPopulationMap(Map<Integer, Integer> startingPopulation,
                                                                              AlgorithmConfigData configData)
     {
         Map<Integer, Integer> finalFunctionMap = new HashMap<>();
@@ -90,18 +90,19 @@ public class Logics
         return total;
     }
 
-    public Map.Entry<Integer, Integer> randomPickFromFunctionValuesMap(Map<Integer, Integer> functionValuesMap)
+    public Integer roulettePickKeyOnGivenGeneration(Map<Integer, Integer> generationZero, AlgorithmConfigData configData)
     {
         Random random = new Random();
+        Map<Integer, Integer> functionValuesMap = calculateFunctionValuesMapBasedOnPopulationMap(generationZero, configData);
         Integer total = totalPopulationFunctionValue(functionValuesMap);
 
         int pick = random.nextInt(total);
-            System.out.println("PICK :: " + pick);
+        System.out.println("PICK :: " + pick);
 
         int temporaryTotal=0;
         Map.Entry<Integer, Integer> finalEntry = functionValuesMap.entrySet().iterator().next();
 
-            System.out.println("FINAL ENTRY <> " + finalEntry);
+        System.out.println("temporary entry <> " + finalEntry);
 
         for (Map.Entry<Integer, Integer> entry : functionValuesMap.entrySet())
         {
@@ -112,12 +113,40 @@ public class Logics
                 break;
             }
         }
-        return finalEntry;
+        System.out.println("FINAL ENTRY <> " + finalEntry);
+        return finalEntry.getKey();
     }
 
-    public Map<Integer, Integer> determineOffspringForGivenGeneration(Map<Integer, Integer> generationZero)
-    {
 
-    }
+//
+//    public Map.Entry<Integer, Integer> randomPickFromFunctionValuesMap(Map<Integer, Integer> functionValuesMap)
+//    {
+//        Random random = new Random();
+//        Integer total = totalPopulationFunctionValue(functionValuesMap);
+//
+//        int pick = random.nextInt(total);
+//            System.out.println("PICK :: " + pick);
+//
+//        int temporaryTotal=0;
+//        Map.Entry<Integer, Integer> finalEntry = functionValuesMap.entrySet().iterator().next();
+//
+//            System.out.println("FINAL ENTRY <> " + finalEntry);
+//
+//        for (Map.Entry<Integer, Integer> entry : functionValuesMap.entrySet())
+//        {
+//            temporaryTotal += entry.getValue();
+//            if (pick <= temporaryTotal)
+//            {
+//                finalEntry = entry;
+//                break;
+//            }
+//        }
+//        return finalEntry;
+//    }
+
+//    public Map<Integer, Integer> determineOffspringForGivenGeneration(Map<Integer, Integer> generationZero)
+//    {
+//
+//    }
 
 }

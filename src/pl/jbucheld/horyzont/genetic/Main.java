@@ -12,20 +12,21 @@ public class Main
         int targetBinaryWordLength = 5;
         int amountOfRecords = 6;
         final AlgorithmConfigData currentConfigData = new AlgorithmConfigData(0,0,6, 3,0.8,0.2,3,3);
+        GeneticAlgorithm algorithm = new GeneticAlgorithm(currentConfigData);
 
         Map<Integer, Integer> startingPopulation = logics.randomizeMapOfIntegerPopulation(32, amountOfRecords);
-        Map<Integer, Integer> functionValuesMap = logics.calculateFunctionValuesBasedOnPopulationMap(startingPopulation, currentConfigData);
+//        Map<Integer, Integer> functionValuesMap = logics.calculateFunctionValuesMapBasedOnPopulationMap(startingPopulation, currentConfigData);
 
         for (Map.Entry<Integer, Integer> entry : startingPopulation.entrySet()) System.out.println(entry);
         for (int i = 1; i <= startingPopulation.size(); i++)
         {
             System.out.println("Entry :: " + "index (" + i + ") "  + startingPopulation.get(i)
                     + ", binary :: " + logics.convertIntegerToBinaryString(startingPopulation.get(i), targetBinaryWordLength)
-                    + ", calculated function value :: " + logics.calculateFunctionOnGivenX(currentConfigData, startingPopulation.get(i))
-                    + ", mapped function value ;; " + functionValuesMap.get(i));
+                    + ", calculated function value :: " + logics.calculateFunctionOnGivenX(currentConfigData, startingPopulation.get(i)));
+//                    + ", mapped function value ;; " + functionValuesMap.get(i));
         }
 
-        System.out.println("Randomized entry: >>> " + logics.randomPickFromFunctionValuesMap(functionValuesMap));
+        System.out.println("Randomized entry: >>> " + logics.roulettePickKeyOnGivenGeneration(startingPopulation, currentConfigData));
         for (Map.Entry<Integer, Integer> entry : startingPopulation.entrySet()) System.out.println(entry);
 
     }
