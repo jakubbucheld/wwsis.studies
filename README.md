@@ -2,7 +2,9 @@
 
 ## TSP - ASO
 This section is my approach to Travelling Salesman Problem, trying to  build OOP Ant Colony Optimization Algorithm.
-It's still *WIP*
+
+## Simple Genetic Algorithm
+This section is my approach to basics of genetic algorithms. It still has some malfunctions, but its *WIP*. The purpose of this particular algorithm is to find maximal value of given function, on given factors, etc. 
 
 ## Dev note ::
 Nov 21. 2020
