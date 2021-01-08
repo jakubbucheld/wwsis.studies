@@ -17,9 +17,13 @@ public class AlgorithmConfigData
     private int generationLimit;
     private int repeatingLimit;
 
+    // these two fields determine population size and binary word length
+    int targetBinaryWordLength;
+    int amountOfRecords;
+
     public AlgorithmConfigData() {}
 
-    public AlgorithmConfigData(Integer factorA, Integer factorB, Integer factorC, Integer factorD, Double crossingFactor, Double mutationFactor, int eraLimit, int repeatingLimit) {
+    public AlgorithmConfigData(Integer factorA, Integer factorB, Integer factorC, Integer factorD, Double crossingFactor, Double mutationFactor, int eraLimit, int repeatingLimit, int targetBinaryWordLength, int amountOfRecords) {
         this.factorA = factorA;
         this.factorB = factorB;
         this.factorC = factorC;
@@ -28,6 +32,8 @@ public class AlgorithmConfigData
         this.mutationFactor = mutationFactor;
         this.generationLimit = eraLimit;
         this.repeatingLimit = repeatingLimit;
+        this.targetBinaryWordLength = targetBinaryWordLength;
+        this.amountOfRecords = amountOfRecords;
     }
 
     @Override
@@ -41,6 +47,8 @@ public class AlgorithmConfigData
                 ", mutationFactor=" + mutationFactor +
                 ", eraLimit=" + generationLimit +
                 ", repeatingLimit=" + repeatingLimit +
+                ", targetBinaryWordLength=" + targetBinaryWordLength +
+                ", amountOfRecords=" + amountOfRecords +
                 '}';
     }
 
@@ -107,4 +115,21 @@ public class AlgorithmConfigData
     public void setRepeatingLimit(int repeatingLimit) {
         this.repeatingLimit = repeatingLimit;
     }
+
+    public int getTargetBinaryWordLength() {
+        return targetBinaryWordLength;
+    }
+
+    public void setTargetBinaryWordLength(int targetBinaryWordLength) {
+        this.targetBinaryWordLength = targetBinaryWordLength;
+    }
+
+    public int getAmountOfRecords() {
+        return amountOfRecords;
+    }
+
+    public void setAmountOfRecords(int amountOfRecords) {
+        this.amountOfRecords = amountOfRecords;
+    }
+
 }

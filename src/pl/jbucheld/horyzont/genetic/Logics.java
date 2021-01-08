@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Logics
 {
+    private Random random = new Random();
 
     public AlgorithmConfigData collectStartingData()
     {
@@ -45,11 +46,6 @@ public class Logics
         + ((configData.getFactorB()*X) * (configData.getFactorB()*X))
         + configData.getFactorC()*X
         + configData.getFactorD();
-//
-//        return Math.pow((configData.getFactorA()*X), 3)
-//        + Math.pow((configData.getFactorB()*X), 2)
-//        + configData.getFactorC()*X
-//        + configData.getFactorD();
     }
 
     public Map<Integer, Integer> randomizeMapOfIntegerPopulation(Integer range, Integer amountOfRecords)
@@ -59,6 +55,7 @@ public class Logics
         for (int i = 0; i < amountOfRecords; i++) finalIntegerMap.put(i+1, random.nextInt(range));
         return finalIntegerMap;
     }
+
 
     public String convertIntegerToBinaryString(Integer integer, Integer targetBinaryWordLength)
     {
@@ -73,6 +70,7 @@ public class Logics
         else return temporary;
     }
 
+
     public Map<Integer, Integer> calculateFunctionValuesMapBasedOnPopulationMap(Map<Integer, Integer> startingPopulation,
                                                                              AlgorithmConfigData configData)
     {
@@ -83,6 +81,8 @@ public class Logics
         }
         return finalFunctionMap;
     }
+
+
     public Integer totalPopulationFunctionValue(Map<Integer, Integer> functionValuesMap)
     {
         Integer total = 0;
@@ -90,63 +90,48 @@ public class Logics
         return total;
     }
 
+
     public Integer roulettePickKeyOnGivenGeneration(Map<Integer, Integer> generationZero, AlgorithmConfigData configData)
     {
-        Random random = new Random();
+
         Map<Integer, Integer> functionValuesMap = calculateFunctionValuesMapBasedOnPopulationMap(generationZero, configData);
         Integer total = totalPopulationFunctionValue(functionValuesMap);
+        total = Math.abs(total);
 
         int pick = random.nextInt(total);
-        System.out.println("PICK :: " + pick);
-
         int temporaryTotal=0;
         Map.Entry<Integer, Integer> finalEntry = functionValuesMap.entrySet().iterator().next();
-
-        System.out.println("temporary entry <> " + finalEntry);
-
         for (Map.Entry<Integer, Integer> entry : functionValuesMap.entrySet())
         {
-            temporaryTotal += entry.getValue();
+            temporaryTotal += Math.abs(entry.getValue());
             if (pick <= temporaryTotal)
             {
                 finalEntry = entry;
                 break;
             }
+
         }
-        System.out.println("FINAL ENTRY <> " + finalEntry);
+//        System.out.println("FINAL ENTRY <> " + finalEntry);
         return finalEntry.getKey();
     }
 
 
-//
-//    public Map.Entry<Integer, Integer> randomPickFromFunctionValuesMap(Map<Integer, Integer> functionValuesMap)
-//    {
-//        Random random = new Random();
-//        Integer total = totalPopulationFunctionValue(functionValuesMap);
-//
-//        int pick = random.nextInt(total);
-//            System.out.println("PICK :: " + pick);
-//
-//        int temporaryTotal=0;
-//        Map.Entry<Integer, Integer> finalEntry = functionValuesMap.entrySet().iterator().next();
-//
-//            System.out.println("FINAL ENTRY <> " + finalEntry);
-//
-//        for (Map.Entry<Integer, Integer> entry : functionValuesMap.entrySet())
-//        {
-//            temporaryTotal += entry.getValue();
-//            if (pick <= temporaryTotal)
-//            {
-//                finalEntry = entry;
-//                break;
-//            }
-//        }
-//        return finalEntry;
-//    }
+    public Integer performSingleCrossing(Integer first, Integer second, int targetBinaryWordLength, int locus)
+    {
+        String firstAsBinaryWord = convertIntegerToBinaryString(first, targetBinaryWordLength);
+        String secondAsBinaryWord = convertIntegerToBinaryString(second, targetBinaryWordLength);
 
-//    public Map<Integer, Integer> determineOffspringForGivenGeneration(Map<Integer, Integer> generationZero)
-//    {
-//
-//    }
+        System.out.println("1. - " + firstAsBinaryWord);
+        System.out.println("2. - " + secondAsBinaryWord);
+
+        StringBuilder finalString = new StringBuilder();
+        finalString.append(firstAsBinaryWord, 0, locus).append(secondAsBinaryWord.substring(locus));
+
+        System.out.println("---> crossed (binary): " + finalString.toString());
+        System.out.println("---> crossed (decimal): " + Integer.parseInt(finalString.toString(),2));
+
+        return Integer.parseInt(finalString.toString(),2);
+    }
+
 
 }
