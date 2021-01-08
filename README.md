@@ -6,7 +6,10 @@ This section is my approach to Travelling Salesman Problem, trying to  build OOP
 ## Simple Genetic Algorithm
 This section is my approach to basics of genetic algorithms. It still has some malfunctions, but its *WIP*. The purpose of this particular algorithm is to find maximal value of given function, on given factors, etc. 
 
-## Dev note ::
+## HOW TO NAVIGATE 
+The core of my projects can be found in /src folder and subdirectories. the rest is pretty much irrelevant.
+
+### Dev note ::
 Nov 21. 2020
 Finished ACO-TSP.
 At current stage you can select (by // other option) between generating and inputting data.
