@@ -116,19 +116,31 @@ public class Logics
     }
 
 
+    public Integer performSingleMutation(Integer integer, int locus, int targetBinaryWordLength)
+    {
+        String binaryWord = convertIntegerToBinaryString(integer, targetBinaryWordLength);
+//        System.out.println("---> before mutation : " + binaryWord + ", locus : " + locus);
+
+        StringBuilder binaryWordAfterMutation = new StringBuilder(binaryWord);
+        if (binaryWord.charAt(locus)=='0') binaryWordAfterMutation.setCharAt(locus, '1');
+        else binaryWordAfterMutation.setCharAt(locus, '0');
+//        System.out.println("---> after mutation " + binaryWordAfterMutation);
+        return Integer.parseInt(binaryWordAfterMutation.toString(), 2);
+    }
+
     public Integer performSingleCrossing(Integer first, Integer second, int targetBinaryWordLength, int locus)
     {
         String firstAsBinaryWord = convertIntegerToBinaryString(first, targetBinaryWordLength);
         String secondAsBinaryWord = convertIntegerToBinaryString(second, targetBinaryWordLength);
 
-        System.out.println("1. - " + firstAsBinaryWord);
-        System.out.println("2. - " + secondAsBinaryWord);
+//        System.out.println("1. - " + firstAsBinaryWord);
+//        System.out.println("2. - " + secondAsBinaryWord);
 
         StringBuilder finalString = new StringBuilder();
         finalString.append(firstAsBinaryWord, 0, locus).append(secondAsBinaryWord.substring(locus));
 
-        System.out.println("---> crossed (binary): " + finalString.toString());
-        System.out.println("---> crossed (decimal): " + Integer.parseInt(finalString.toString(),2));
+//        System.out.println("---> crossed (binary): " + finalString.toString());
+//        System.out.println("---> crossed (decimal): " + Integer.parseInt(finalString.toString(),2));
 
         return Integer.parseInt(finalString.toString(),2);
     }

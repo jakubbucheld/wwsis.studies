@@ -1,6 +1,7 @@
 package pl.jbucheld.horyzont.genetic;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -10,13 +11,14 @@ public class GeneticAlgorithm
     private AlgorithmConfigData algorithmConfigData;
     private Random random = new Random();
 
-    public Map<Integer, Integer> getNextGeneration(Map<Integer, Integer> ancestor)
+
+    public void getNextGeneration(List<Map<Integer,Integer>> history)
     {
-        Map<Integer, Integer> offspring = createOffspring(ancestor);
+        Map<Integer, Integer> bestGeneration = new HashMap<>();
+        Map<Integer, Integer> offspring = createOffspring(history.get(history.size()-1));
         performBinaryChromosomeCrossing(offspring);
         performBinaryChromosomeMutation(offspring);
-        verifyOffspringFitness(offspring);
-        return offspring;
+        history.add(offspring);
     }
 
 
@@ -42,10 +44,10 @@ public class GeneticAlgorithm
             System.out.println("---> CHECK for crossing :: " + check);
             if (check<algorithmConfigData.getCrossingFactor() && i != (offspring.size()))
             {
-                System.out.println("Crossing chromosome " + i + " with chromosome " + (i + 1));
+//                System.out.println("Crossing chromosome " + i + " with chromosome " + (i + 1));
 
                 int locus = random.nextInt((algorithmConfigData.getTargetBinaryWordLength() - 1) - 1) + 1;
-                System.out.println("locus: " + locus);
+//                System.out.println("locus: " + locus);
 
                 Integer first = logics.performSingleCrossing(offspring.get(i), offspring.get(i + 1), algorithmConfigData.getTargetBinaryWordLength(), locus);
                 Integer second = logics.performSingleCrossing(offspring.get(i + 1), offspring.get(i), algorithmConfigData.getTargetBinaryWordLength(), locus);
@@ -58,7 +60,16 @@ public class GeneticAlgorithm
 
     private void performBinaryChromosomeMutation(Map<Integer, Integer> offspring)
     {
+        for (Map.Entry <Integer, Integer> entry : offspring.entrySet()) {
+            if(random.nextDouble()<algorithmConfigData.getMutationFactor())
+            {
+                System.out.println("Starting mutation...");
+                int locus = random.nextInt(algorithmConfigData.getTargetBinaryWordLength()-1)+1;
 
+                entry.setValue(logics.performSingleMutation(entry.getValue(), locus, algorithmConfigData.getTargetBinaryWordLength()));
+
+            }
+        }
     }
 
     private void verifyOffspringFitness(Map<Integer, Integer> mutatedOffspring) {

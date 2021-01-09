@@ -13,7 +13,7 @@ public class AlgorithmConfigData
     private Double mutationFactor;
 
     // these two fields are used to determine if algorithm should be stopped or not
-    // (due to no changes through *eraLimit* eras OR due to *repeatingLimit* repeats of maximum possible score
+    // (due to achieving *generationLimit* generations (algorithm iterations) OR due to *repeatingLimit* repeats of maximum possible score
     private int generationLimit;
     private int repeatingLimit;
 
