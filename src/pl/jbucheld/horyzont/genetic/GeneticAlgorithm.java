@@ -57,7 +57,6 @@ public class GeneticAlgorithm
         }
     }
 
-
     private void performBinaryChromosomeMutation(Map<Integer, Integer> offspring)
     {
         for (Map.Entry <Integer, Integer> entry : offspring.entrySet()) {
@@ -70,9 +69,6 @@ public class GeneticAlgorithm
 
             }
         }
-    }
-
-    private void verifyOffspringFitness(Map<Integer, Integer> mutatedOffspring) {
     }
 
 

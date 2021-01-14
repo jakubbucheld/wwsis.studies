@@ -1,5 +1,6 @@
 package pl.jbucheld.horyzont.genetic;
 
+import java.math.BigInteger;
 import java.util.*;
 
 public class Logics
@@ -42,8 +43,14 @@ public class Logics
     public Integer calculateFunctionOnGivenX(AlgorithmConfigData configData,
                                              Integer X)
     {
-        return ((configData.getFactorA()*X) * (configData.getFactorA()*X) * (configData.getFactorA()*X))
-        + ((configData.getFactorB()*X) * (configData.getFactorB()*X))
+//        return ((configData.getFactorA()*X)^3) + ((configData.getFactorB()*X)^2) + (configData.getFactorC()*X) + configData.getFactorD();
+
+//        Double score = (Math.pow(configData.getFactorA(), 3)*X) + (Math.pow(configData.getFactorB(), 2)*X) + (configData.getFactorC()*X) + configData.getFactorD();
+//        Long finalScore = Math.round(score);
+//        System.out.println(finalScore);
+//        return 1;
+        return (configData.getFactorA()*X*X*X)
+        + ((configData.getFactorB()*X*X))
         + configData.getFactorC()*X
         + configData.getFactorD();
     }
@@ -93,17 +100,21 @@ public class Logics
 
     public Integer roulettePickKeyOnGivenGeneration(Map<Integer, Integer> generationZero, AlgorithmConfigData configData)
     {
-
         Map<Integer, Integer> functionValuesMap = calculateFunctionValuesMapBasedOnPopulationMap(generationZero, configData);
+//        int minimal = 0;
+//
+//        for (Map.Entry<Integer, Integer> entry : functionValuesMap.entrySet()) if(entry.getValue()<minimal) minimal= entry.getValue();
+//        if(minimal<0) for (Map.Entry<Integer, Integer> entry : functionValuesMap.entrySet()) entry.setValue(entry.getValue()+Math.abs(minimal+1));
+
         Integer total = totalPopulationFunctionValue(functionValuesMap);
-        total = Math.abs(total);
+//        total = Math.abs(total);
 
         int pick = random.nextInt(total);
         int temporaryTotal=0;
         Map.Entry<Integer, Integer> finalEntry = functionValuesMap.entrySet().iterator().next();
         for (Map.Entry<Integer, Integer> entry : functionValuesMap.entrySet())
         {
-            temporaryTotal += Math.abs(entry.getValue());
+            temporaryTotal += entry.getValue();
             if (pick <= temporaryTotal)
             {
                 finalEntry = entry;

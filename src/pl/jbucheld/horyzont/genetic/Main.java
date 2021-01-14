@@ -13,7 +13,7 @@ public class Main
         int algorithmIterator = 0;
 
         final AlgorithmConfigData currentConfigData
-                = new AlgorithmConfigData(2, 0, -2, 3, 0.8, 0.2, 10, 10, 5, 6);
+                = new AlgorithmConfigData(0, 0, -1, 40, 0.8, 0.2, 30000, 3, 5, 6);
         GeneticAlgorithm algorithm = new GeneticAlgorithm(currentConfigData);
         List<Map<Integer, Integer>> generationHistory = new ArrayList<>();
 
@@ -54,9 +54,10 @@ public class Main
             {
                 bestGenerationCounter++;
             }
-        algorithmIterator++;
-
-        } while (algorithmIterator<currentConfigData.getRepeatingLimit() && bestGenerationCounter<=currentConfigData.getRepeatingLimit());
+            algorithmIterator++;
+            System.out.println("CGV :: " + currentGenerationValue);
+            System.out.println("BGC " + bestGenerationCounter);
+        } while (algorithmIterator<currentConfigData.getGenerationLimit() && bestGenerationCounter<currentConfigData.getRepeatingLimit());
 
         System.out.println("<> NAJLEPSZA GENERACJA :: ");
         System.out.println(bestGeneration);
